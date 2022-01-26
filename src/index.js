@@ -1,6 +1,3 @@
-//! Default Compute@Edge template program.
-import welcomePage from "./welcome-to-compute@edge.html";
-
 // The entry point for your application.
 //
 // Use this fetch event listener to define your main request handling logic. It could be
@@ -28,19 +25,18 @@ async function handleRequest(event) {
     // Head to https://developer.fastly.com/learning/compute/javascript/ to discover more.
 
     // Create a new request.
-    let CAPIResponse = await fetch(`https://content.code.dev-guardianapis.com/world/live/2021/sep/30/test-liveblog-30092021-1?show-blocks=body:pinned&api-key=${KEY}`, {
+    let CAPIResponse = await fetch(`https://content.code.dev-guardianapis.com/world/live/2021/sep/30/test-liveblog-30092021-1?show-blocks=body:pinned&api-key=${key}`, {
       method: "GET",
       backend: "origin-CODE",
     });
-  
 
     let CAPIString = await CAPIResponse.text();
-    console.log(CAPIString)
-   
+
     // Send a default synthetic response.
-    return new Response("hello world", {
+    return new Response(CAPIString,{
       status: 200,
-      headers: new Headers({ "Content-Type": "text/html; charset=utf-8" }),
+      headers: new Headers({  "Access-Control-Allow-Origin": "*"
+    }),
     });
   }
 
