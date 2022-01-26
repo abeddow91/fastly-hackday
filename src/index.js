@@ -9,7 +9,6 @@ import welcomePage from "./welcome-to-compute@edge.html";
 // synthetic responses.
 
 addEventListener("fetch", (event) => event.respondWith(handleRequest(event)));
-
 async function handleRequest(event) {
   // Get the client request.
   let req = event.request;
@@ -29,33 +28,17 @@ async function handleRequest(event) {
     // Head to https://developer.fastly.com/learning/compute/javascript/ to discover more.
 
     // Create a new request.
-    // let bereq = new Request("http://example.com");
+    let CAPIResponse = await fetch(`https://content.code.dev-guardianapis.com/world/live/2021/sep/30/test-liveblog-30092021-1?show-blocks=body:pinned&api-key=${KEY}`, {
+      method: "GET",
+      backend: "origin-CODE",
+    });
+  
 
-    // Add request headers.
-    // req.headers.set("X-Custom-Header", "Welcome to Compute@Edge!");
-    // req.headers.set(
-    //   "X-Another-Custom-Header",
-    //   "Recommended reading: https://developer.fastly.com/learning/compute"
-    // );
-
-    // Create a cache override.
-    // let cacheOverride = new CacheOverride("override", { ttl: 60 });
-
-    // Forward the request to a backend.
-    // let beresp = await fetch(req, {
-    //   backend: "backend_name",
-    //   cacheOverride,
-    // });
-
-    // Remove response headers.
-    // beresp.headers.delete("X-Another-Custom-Header");
-
-    // Log to a Fastly endpoint.
-    // const logger = fastly.getLogger("my_endpoint");
-    // logger.log("Hello from the edge!");
-
+    let CAPIString = await CAPIResponse.text();
+    console.log(CAPIString)
+   
     // Send a default synthetic response.
-    return new Response(welcomePage, {
+    return new Response("hello world", {
       status: 200,
       headers: new Headers({ "Content-Type": "text/html; charset=utf-8" }),
     });
